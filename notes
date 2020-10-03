@@ -1,0 +1,10 @@
+Migrations
+ - users table
+ - 1:1 relationship user-recipes table 
+    - id
+    - date added
+    - title
+- ingredients table
+    - refernces user-recipe table id
+    - amout NUM
+    - ingredient TEXT
