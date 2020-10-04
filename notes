@@ -12,6 +12,9 @@ Migrations
 
 
 QUESTIONS
+    How do I store the data in the database so that it can be retrieved by user?
+    Or is that done a different way?
+    
     Should ingredients and instructions be stored in the same table with a key to
     differentiate, or should they be different tables, both with a 1:1 relationship
     to the user_recipes table???
