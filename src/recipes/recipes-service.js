@@ -31,7 +31,14 @@ const RecipesService = {
             .from('user_recipes')
             .where({ id })
             .delete()
+    },
+
+    getFullRecipe(db, id) {
+        return db
+            .from()
     }
+
+
 
 }
 

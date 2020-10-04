@@ -1,6 +1,7 @@
 const express = require('express')
 const xss = require('xss')
 const RecipesService = require('./recipes-service')
+const IngredientsService = require('./ingredients-service')
 
 
 const recipesRouter = express.Router()
@@ -9,10 +10,21 @@ const jsonParser = express.json()
 const serializeRecipe = rec => ({
     id: rec.id,
     title: xss(rec.title),
-    original_url: rec.original_url,
+    original_url: xss(rec.original_url),
     created: rec.date_created
 })
 
+const serializeIngredient = ing => ({
+    id: ing.id,
+    title: xss(ing.title),
+    description: xss(ing.description),
+    amount_str: xss(ing.amount_str),
+    amount_in_metric: ing.amount_in_metric,
+    metric_unit: ing.metric_unit
+})
+
+
+//Path to all recipes
 recipesRouter
     .route('/')
     .get((req, res, next) => {
@@ -25,5 +37,94 @@ recipesRouter
             .catch(next)
 
     })
+
+
+
+//Path to specific recipe
+recipesRouter
+    .route('/:id')
+
+    .get((req, res, next) => {
+        RecipesService.getRecipeById(
+            req.app.get('db'),
+            req.params.id
+        )
+            .then(rec => {
+                return res
+                    .status(200)
+                    .json(serializeRecipe(rec))
+            })
+            .catch(next)
+    })
+
+    .delete((req, res, next) => {
+        RecipesService.deleteRecipe(
+            req.app.get('db'),
+            req.params.id
+        )
+            .then(rec => {
+                return res
+                    .status(204)
+                    .end()
+            })
+    })
+
+
+
+//Path to all ingredients from recipe with specified id
+recipesRouter
+    .route('/:id/ingredients')
+    .get((req, res, next) => {
+        IngredientsService.getAllIngredients(
+            req.app.get('db'),
+            req.params.id
+        )
+            .then(rec => {
+                return res
+                    .status(200)
+                    .json(rec.map(serializeIngredient))
+            })
+
+            .catch(next)
+    })
+
+
+
+//Path to specific ingredient from recipe with specified id
+recipesRouter
+    .route('/:id/ingredients/:ingredient')
+    .get((req, res, next) => {
+        IngredientsService.getIngredientById(
+            req.app.get('db'),
+            req.params.id,
+            req.params.ingredient
+        )
+            .then(rec => {
+                return res
+                    .status(200)
+                    .json(rec)
+            })
+
+            .catch(next)
+    })
+
+    .delete((req, res, next) => {
+        IngredientsService.deleteIngredient(
+            req.app.get('db'),
+            req.params.ingredient
+        )
+            .then(rec => {
+                return res
+                    .status(204)
+                    .end()
+            })
+            .catch(next)
+
+    })
+
+
+
+
+
 
 module.exports = recipesRouter;

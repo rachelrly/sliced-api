@@ -1,20 +1,7 @@
-Migrations
- - users table
- - 1:1 relationship user-recipes table 
-    - id
-    - date added
-    - title
-- ingredients table
-    - refernces user-recipe table id
-    - amout NUM
-    - ingredient TEXT
-
-
-
 QUESTIONS
     How do I store the data in the database so that it can be retrieved by user?
     Or is that done a different way?
-    
+
     Should ingredients and instructions be stored in the same table with a key to
     differentiate, or should they be different tables, both with a 1:1 relationship
     to the user_recipes table???
@@ -24,7 +11,7 @@ QUESTIONS
 
     Putting seed files in .env?
 
-    NUMERIC DECIMAL for decimal and whole number?
+    NUMERIC vs DECIMAL for decimal and whole number?
 
 
 
@@ -35,3 +22,11 @@ MEASUREMENTS
 1/4 c (or 2 floz) = 60 mL
 1/3 c = 80 mL
 1 c = 250 mL
+
+
+
+NOTES
+    I want to be able to route to the ingredients based on 
+    how it was established by the recipes-router
+    i.e. /api/recipes/:id/ingredients
+    rather than api/ingredients
