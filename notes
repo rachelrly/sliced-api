@@ -8,3 +8,27 @@ Migrations
     - refernces user-recipe table id
     - amout NUM
     - ingredient TEXT
+
+
+
+QUESTIONS
+    Should ingredients and instructions be stored in the same table with a key to
+    differentiate, or should they be different tables, both with a 1:1 relationship
+    to the user_recipes table???
+
+    Should I convert everything into standard (not american) units to make the 
+    calculations easier -- then convert back? 
+
+    Putting seed files in .env?
+
+    NUMERIC DECIMAL for decimal and whole number?
+
+
+
+
+MEASUREMENTS
+1 tsp = 5 mL
+1 tablespoon = 15 mL
+1/4 c (or 2 floz) = 60 mL
+1/3 c = 80 mL
+1 c = 250 mL

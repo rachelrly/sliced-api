@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS user_recipes;
+DROP TABLE IF EXISTS user_recipes CASCADE;
