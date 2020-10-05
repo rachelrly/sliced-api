@@ -30,11 +30,25 @@ const IngredientsService = {
             .first()
     },
 
-    deleteIngredient(db, id) {
+    deleteIngredient(db, recipe_id, id) {
         return db
             .from('recipe_ingredients')
+            .where('recipe_id', recipe_id)
             .where({ id })
             .delete()
+    },
+
+    addIngredient(db, recipe_id, ingredient) {
+        return db
+            .insert(ingredient)
+            .into('recipe_ingredients')
+            .where('recipe_id', recipe_id)
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
+
+
     }
 }
 

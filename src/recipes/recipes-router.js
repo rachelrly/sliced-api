@@ -37,6 +37,70 @@ recipesRouter
             .catch(next)
 
     })
+    .post(jsonParser, (req, res, next) => {
+        const user_id = 1;
+        const { title, original_url, ingredients } = req.body;
+        const newRecipe = { title, original_url, user_id };
+
+        RecipesService.addRecipe(
+            req.app.get('db'),
+            newRecipe
+        )
+            .then(rec => {
+                res
+                    .status(201)
+                    .json(serializeRecipe(rec))
+
+
+                // .then(recipe => {
+                //     const amount_in_metric = 5;
+                //     const metric_unit = 'mL';
+                //     console.log(recipe)
+
+                //     ingredients.forEach(ing => {
+                //         const { title, description, amount_str } = ing;
+                //         const newIngredient = {
+                //             title,
+                //             description,
+                //             amount_in_metric,
+                //             amount_str,
+                //             metric_unit,
+                //             recipe_id: 1
+                //         }
+                //         IngredientsService.addIngredient(
+                //             req.app.get('db'),
+                //             1,
+                //             newIngredient
+                //         )
+                //             .then(ing => {
+                //                 res
+                //                     .status(201)
+                //                     .json(serializeRecipe(recipe))
+                //             })
+                //     })
+
+
+            })
+            .catch(next)
+
+        // (rec => {
+        //     ingredients.forEach(ing => {
+        //         const newIngredient = { title, description, amount_str, amount_in_metric, metric_unit, recipe_id: id }
+        //         IngredientsService.addIngredient(
+        //             req.app.get('db'),
+        //         )
+        //     })
+
+
+        //post details in recipes folder
+        //use id to create ingredients
+        //call post ingredients for each recipe
+        //take in something like
+        //{title, url, ingredients} = req.body
+        //post to recipes db with title, url 
+        //send back recipe_id
+        //ingredients.forEach(ing => {call add ingredient service})
+    })
 
 
 
@@ -87,6 +151,25 @@ recipesRouter
 
             .catch(next)
     })
+    .post(jsonParser, (req, res, next) => {
+        const { title, description, amount_str } = req.body;
+        const amount_in_metric = 5;
+        const metric_unit = 'mL';
+        const newIngredient = { title, description, amount_str, amount_in_metric, metric_unit, recipe_id: req.params.id }
+        IngredientsService.addIngredient(
+            req.app.get('db'),
+            req.params.id,
+            newIngredient
+        )
+
+            .then(ing => {
+                res
+                    .status(201)
+                    .json(serializeIngredient(ing))
+            })
+
+            .catch(next)
+    })
 
 
 
@@ -102,7 +185,7 @@ recipesRouter
             .then(rec => {
                 return res
                     .status(200)
-                    .json(rec)
+                    .json(serializeIngredient(rec))
             })
 
             .catch(next)
@@ -111,6 +194,7 @@ recipesRouter
     .delete((req, res, next) => {
         IngredientsService.deleteIngredient(
             req.app.get('db'),
+            req.params.id,
             req.params.ingredient
         )
             .then(rec => {

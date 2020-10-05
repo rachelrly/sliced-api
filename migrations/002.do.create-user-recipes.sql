@@ -1,4 +1,4 @@
-CREATE TABLE user_recipes(
+CREATE TABLE IF NOT EXISTS user_recipes(
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     original_url TEXT,
@@ -6,4 +6,3 @@ CREATE TABLE user_recipes(
     user_id INTEGER 
         REFERENCES users(id) ON DELETE CASCADE NOT NULL
 );
-

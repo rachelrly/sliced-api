@@ -33,9 +33,14 @@ const RecipesService = {
             .delete()
     },
 
-    getFullRecipe(db, id) {
+    addRecipe(db, recipe) {
         return db
-            .from()
+            .insert(recipe)
+            .into('user_recipes')
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
     }
 
 

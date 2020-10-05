@@ -1,4 +1,19 @@
+DROP TYPE IF EXISTS metric_unit;
+CREATE TYPE metric_unit AS ENUM (
+    'L',
+    'mL',
+    'grams'
+);
+
+
 QUESTIONS
+    Should measurement conversions (input to metric and conversions) 
+    be done in middleware or react?
+        -get metric units to convert on front end
+        -send metric and standard to front end
+        -convert to metric in database
+        -could let users be redirected to main page when created to 
+        force reload of componet with new get request...
     How do I store the data in the database so that it can be retrieved by user?
     Or is that done a different way?
 
