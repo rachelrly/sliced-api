@@ -90,6 +90,7 @@ recipesRouter
                     .status(204)
                     .end()
             })
+            .catch(next)
     })
 
 
