@@ -44,17 +44,68 @@ recipesRouter
 
         RecipesService.addRecipe(
             req.app.get('db'),
-            newRecipe,
-            ingredients
+            newRecipe
         )
             .then(rec => {
-                console.log(rec)
-                return res
+                res
                     .status(201)
                     .json(serializeRecipe(rec))
-            })
 
+                //separte request for each table
+                //add recipe could manage interaction
+                //Add recipe promise + arr of promises
+                //PROMISES.ALL(ARRAY_OF_PROMISES)
+                //.then(res => )
+                //.catch()
+
+                // .then(recipe => {
+                //     const amount_in_metric = 5;
+                //     const metric_unit = 'mL';
+                //     console.log(recipe)
+
+                //     ingredients.forEach(ing => {
+                //         const { title, description, amount_str } = ing;
+                //         const newIngredient = {
+                //             title,
+                //             description,
+                //             amount_in_metric,
+                //             amount_str,
+                //             metric_unit,
+                //             recipe_id: 1
+                //         }
+                //         IngredientsService.addIngredient(
+                //             req.app.get('db'),
+                //             1,
+                //             newIngredient
+                //         )
+                //             .then(ing => {
+                //                 res
+                //                     .status(201)
+                //                     .json(serializeRecipe(recipe))
+                //             })
+                //     })
+
+
+            })
             .catch(next)
+
+        // (rec => {
+        //     ingredients.forEach(ing => {
+        //         const newIngredient = { title, description, amount_str, amount_in_metric, metric_unit, recipe_id: id }
+        //         IngredientsService.addIngredient(
+        //             req.app.get('db'),
+        //         )
+        //     })
+
+
+        //post details in recipes folder
+        //use id to create ingredients
+        //call post ingredients for each recipe
+        //take in something like
+        //{title, url, ingredients} = req.body
+        //post to recipes db with title, url 
+        //send back recipe_id
+        //ingredients.forEach(ing => {call add ingredient service})
     })
 
 

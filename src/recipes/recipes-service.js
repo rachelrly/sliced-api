@@ -1,3 +1,4 @@
+
 const RecipesService = {
 
     getAllRecipes(db, user_id) {
@@ -33,7 +34,10 @@ const RecipesService = {
             .delete()
     },
 
-    addRecipe(db, recipe) {
+    addRecipe(db, recipe, ingredients) {
+
+        const amount_in_metric = 5;
+        const metric_unit = 'mL';
         return db
             .insert(recipe)
             .into('user_recipes')
@@ -41,9 +45,23 @@ const RecipesService = {
             .then(rows => {
                 return rows[0]
             })
+            .then(rec => {
+                let recipe_id = rec.id
+
+                ingredients.forEach((ing) => {
+                    const fullIng = { ...ing, amount_in_metric, metric_unit, recipe_id }
+                    return db
+                        .insert({ ...fullIng })
+                        .into('recipe_ingredients')
+                        .returning('*')
+                        .catch(err => console.log(err.message))
+
+                })
+                return rec;
+            })
+            .catch(err => console.log(err.message))
+
     }
-
-
 
 }
 
