@@ -42,6 +42,10 @@ recipesRouter
         const { title, original_url, ingredients } = req.body;
         const newRecipe = { title, original_url, user_id };
 
+        //here I run ingredients.amount_str through 
+        //conversion middleware to get value in metric
+        //and save with ingredient object
+
         RecipesService.addRecipe(
             req.app.get('db'),
             newRecipe,
