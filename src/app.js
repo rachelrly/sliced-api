@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config')
 const recipesRouter = require('./recipes/recipes-router')
-
+const usersRouter = require('./users/users-router')
 
 const app = express()
 
@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(helmet())
 app.use(cors())
 app.use('/api/recipes', recipesRouter)
-
+app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello Sliced')
