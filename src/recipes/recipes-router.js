@@ -17,10 +17,7 @@ const serializeRecipe = rec => ({
 const serializeIngredient = ing => ({
     id: ing.id,
     title: xss(ing.title),
-    description: xss(ing.description),
     amount_str: xss(ing.amount_str),
-    amount_in_metric: ing.amount_in_metric,
-    metric_unit: ing.metric_unit
 })
 
 
@@ -42,10 +39,6 @@ recipesRouter
         const { title, original_url, ingredients } = req.body;
         const newRecipe = { title, original_url, user_id };
 
-        //here I run ingredients.amount_str through 
-        //conversion middleware to get value in metric
-        //and save with ingredient object
-
         RecipesService.addRecipe(
             req.app.get('db'),
             newRecipe,
@@ -55,7 +48,7 @@ recipesRouter
                 console.log(rec)
                 return res
                     .status(201)
-                    .json(serializeRecipe(rec))
+                    .json(serializeRecipe)
             })
 
             .catch(next)
@@ -112,10 +105,8 @@ recipesRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { title, description, amount_str } = req.body;
-        const amount_in_metric = 5;
-        const metric_unit = 'mL';
-        const newIngredient = { title, description, amount_str, amount_in_metric, metric_unit, recipe_id: req.params.id }
+        const { title, amount_str } = req.body;
+        const newIngredient = { title, amount_str, recipe_id: req.params.id }
         IngredientsService.addIngredient(
             req.app.get('db'),
             req.params.id,

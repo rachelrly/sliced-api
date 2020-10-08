@@ -36,8 +36,6 @@ const RecipesService = {
 
     addRecipe(db, recipe, ingredients) {
 
-        const amount_in_metric = 5;
-        const metric_unit = 'mL';
         return db
             .insert(recipe)
             .into('user_recipes')
@@ -49,7 +47,7 @@ const RecipesService = {
                 let recipe_id = rec.id
 
                 ingredients.forEach((ing) => {
-                    const fullIng = { ...ing, amount_in_metric, metric_unit, recipe_id }
+                    const fullIng = { ...ing, recipe_id }
                     return db
                         .insert({ ...fullIng })
                         .into('recipe_ingredients')

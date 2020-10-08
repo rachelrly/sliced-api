@@ -5,10 +5,7 @@ const IngredientsService = {
             .select(
                 'id',
                 'title',
-                'description',
                 'amount_str',
-                'amount_in_metric',
-                'metric_unit',
             )
             .from('recipe_ingredients')
             .where('recipe_id', recipe_id)
@@ -20,10 +17,7 @@ const IngredientsService = {
             .select(
                 'id',
                 'title',
-                'description',
-                'amount_str',
-                'amount_in_metric',
-                'metric_unit',
+                'amount_str'
             )
             .where('id', id)
             .where('recipe_id', recipe_id)
