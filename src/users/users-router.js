@@ -7,6 +7,23 @@ const jsonParser = express.json()
 
 usersRouter
     .route('/')
+    .get((req, res, next) => {
+        const email = req.body;
+        UsersService.getUserIdByEmail(
+            req.app.get('db'),
+            email
+        )
+            .then(id => {
+                return res
+                    .status(200)
+                    .json(id)
+            })
+    })
+
+
+
+
+
     .post(jsonParser, (req, res, next) => {
         const { email, nickname, password } = req.body;
         const newUser = { email, nickname, password }

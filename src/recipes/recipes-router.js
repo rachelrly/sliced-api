@@ -23,9 +23,13 @@ const serializeIngredient = ing => ({
 
 //Path to all recipes
 recipesRouter
-    .route('/')
+    .route('/:user')
+
     .get((req, res, next) => {
-        RecipesService.getAllRecipes(req.app.get('db'), 1)
+        const user_id = req.params.user;
+        RecipesService.getAllRecipes(
+            req.app.get('db'),
+            user_id)
             .then(rec => {
                 return res
                     .status(200)
@@ -35,7 +39,7 @@ recipesRouter
 
     })
     .post(jsonParser, (req, res, next) => {
-        const user_id = 1;
+        const user_id = req.params.user;
         const { title, original_url, ingredients } = req.body;
         const newRecipe = { title, original_url, user_id };
 
@@ -55,15 +59,16 @@ recipesRouter
     })
 
 
-
+//refactor to include user id
 //Path to specific recipe
 recipesRouter
-    .route('/:id')
+    .route('/:user/:id')
 
     .get((req, res, next) => {
         RecipesService.getRecipeById(
             req.app.get('db'),
-            req.params.id
+            req.params.id,
+            req.params.user
         )
             .then(rec => {
                 return res
@@ -90,7 +95,8 @@ recipesRouter
 
 //Path to all ingredients from recipe with specified id
 recipesRouter
-    .route('/:id/ingredients')
+    .route('/:user/:id/ingredients')
+
     .get((req, res, next) => {
         IngredientsService.getAllIngredients(
             req.app.get('db'),
@@ -127,6 +133,7 @@ recipesRouter
 //Path to specific ingredient from recipe with specified id
 recipesRouter
     .route('/:id/ingredients/:ingredient')
+
     .get((req, res, next) => {
         IngredientsService.getIngredientById(
             req.app.get('db'),
