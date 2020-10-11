@@ -8,15 +8,11 @@ const jsonParser = express.json()
 usersRouter
     .route('/')
     .get((req, res, next) => {
-        const email = req.body;
-        UsersService.getUserIdByEmail(
-            req.app.get('db'),
-            email
-        )
-            .then(id => {
+        UsersService.getUsers(req.app.get('db'))
+            .then(users => {
                 return res
                     .status(200)
-                    .json(id)
+                    .json(users)
             })
     })
 

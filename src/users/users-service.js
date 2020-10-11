@@ -6,6 +6,11 @@ const UsersService = {
             .where('email', email)
             .first()
     },
+    getUsers(db) {
+        return db
+            .select('*')
+            .from('users')
+    },
 
 
 

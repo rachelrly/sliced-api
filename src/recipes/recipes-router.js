@@ -40,8 +40,8 @@ recipesRouter
     })
     .post(jsonParser, (req, res, next) => {
         const user_id = req.params.user;
-        const { title, original_url, ingredients } = req.body;
-        const newRecipe = { title, original_url, user_id };
+        const { title, original_url, ingredients, id } = req.body;
+        const newRecipe = { title, original_url, user_id, id };
 
         RecipesService.addRecipe(
             req.app.get('db'),
