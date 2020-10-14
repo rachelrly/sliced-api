@@ -11,12 +11,6 @@ const UsersService = {
             .select('*')
             .from('users')
     },
-
-
-
-
-
-
     addUser(db, user) {
         return db
             .insert(user)
