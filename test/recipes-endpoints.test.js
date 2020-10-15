@@ -4,7 +4,7 @@ const helpers = require('./test-helpers')
 const { expect } = require('chai')
 const supertest = require('supertest')
 
-describe.only('Recipe Endpoints', function () {
+describe('Recipe Endpoints', function () {
 
     let db;
 

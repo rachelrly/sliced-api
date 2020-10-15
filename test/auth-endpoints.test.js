@@ -1,13 +1,14 @@
 const knex = require('knex')
 const supertest = require('supertest')
 const app = require('../src/app')
+const { expect } = require('chai')
 const helpers = require('./test-helpers')
 
-describe.skip('Auth Endpoints', function () {
+describe('Auth Endpoints', function () {
     let db
 
     const testUsers = helpers.usersArr;
-    const testUser = testUsers[0];
+    const testUser = testUsers[1];
 
     before('knex instance', () => {
         db = knex({
@@ -17,37 +18,30 @@ describe.skip('Auth Endpoints', function () {
         app.set('db', db)
     })
 
-    // after('destroy db', () => db.destroy());
+    after('destroy db', () => db.destroy());
 
-    //  beforeEach('cleanup', () => helpers.cleanTables(db))
+    beforeEach('cleanup', () => helpers.cleanTables(db))
 
-    //afterEach('cleanup', () => helpers.cleanTables(db))
+    afterEach('cleanup', () => helpers.cleanTables(db))
 
     describe(`POST /api/auth/login`, () => {
         beforeEach('insert users', () => {
-            helpers.seedUsers(
-                db,
-                testUsers
-            )
+            return db
+                .insert(testUsers)
+                .into('users')
         })
+        it(`Given valid login credentials, responds with 200`, () => {
 
-        const required = ['email', 'password'];
-        required.forEach(r => {
-            const loginAttemptBody = {
-                email: testUser.email,
-                password: testUser.password
+            const login = {
+                "email": 'lucy@gmail.com',
+                "password": "rac-password"
             }
 
-            it(`Request is missing '${r}'`, () => {
-                delete loginAttemptBody[r]
 
-                return supertest(app)
-                    .post('/api/auth/login')
-                    .send(loginAttemptBody)
-                    .expect(400, {
-                        error: `Request is missing '${r}'`,
-                    })
-            })
+            return supertest(app)
+                .post('/api/auth/login')
+                .send(login)
+                .expect(200)
         })
     })
 

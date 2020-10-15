@@ -59,8 +59,7 @@ recipesRouter
     })
 
 
-//refactor to include user id
-//Path to specific recipe
+
 recipesRouter
     .route('/:user/:id')
 
@@ -93,7 +92,7 @@ recipesRouter
 
 
 
-//Path to all ingredients from recipe with specified id
+
 recipesRouter
     .route('/:user/:id/ingredients')
 

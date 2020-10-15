@@ -21,6 +21,7 @@ authRouter
             user.email
         )
             .then(dbUser => {
+
                 if (!dbUser) {
                     return res
                         .status(400)
@@ -28,6 +29,7 @@ authRouter
                 }
                 return AuthService.comparePasswords(user.password, dbUser.password)
                     .then(compareMatch => {
+                        console.log('fails at incorrect email password')
                         if (!compareMatch)
                             if (!compareMatch)
                                 return res
