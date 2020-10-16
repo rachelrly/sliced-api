@@ -1,26 +1,70 @@
-# Express Boilerplate!
+# Sliced Client
 
-This is a boilerplate project used for starting new projects!
+Sliced allows you to save your recipes and scale the ingredients up or down by 1/4 increments.
 
-## Set up
+This repository is for the back-end API.
 
-Complete the following steps to set up a new boilerplate:
+Live version: https://sliced.rachanastasia.vercel.app/
 
-1. Clone this repo
-2. `cd` into cloned repository
-3. Make a fresh start of the git history with `rm -rf .git && git init`
-4. Install dependencies with `npm install`
-5. Move the example .env file to `.env` that will be ignored by git and read by and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+client repo: https://github.com/Rachanastasia/sliced-client
 
-## Scripts
+## Images
 
-Start the application `npm start`
+![](sliced-home.png)
 
-Start the nodemon for the application `npm run dev`
+![](sliced-login.png)
 
-Run the texts `npm test`
+![](recipe-scale-up.png)
 
-## Deploying
+![](recipe-scale-down.png)
 
-When your new project is ready for deployment, add the heroku app with `heroku create`. This will make a new git remote called "heroku" and you can then run `npm run deploy` which will push to this remotes master branch
+![](recipe-list.png)
+
+![](add-recipe.png)
+
+## Tech Stack
+
+### Back End
+
+- Node with Express
+- PostgreSQL database
+
+### Testing
+
+- Mocha
+- Chai
+- Supertest
+
+### Production
+
+- Deployed with Heroku
+
+## Codebase Structure
+
+### /migrations
+
+SQL files that build three tables in the database--'users', 'user_recipes', 'recipe_ingredients'
+
+### /src/app.js
+
+Establishes /api/recipes, /api/auth, and /api/user routes.
+
+### /src/auth
+
+Contains router and service file for /api/auth endpoint.
+
+#### /src/users
+
+Contains router and service file for /api/users endpoint.
+
+### /src/recipes
+
+Contains a router, a recipe service file, and an ingredients service file for /api/recipes endpoint.
+
+### /src/middleware
+
+Validates JWT, working with auth-service.js
+
+### /test
+
+Contains a file for each endpoint with tests for each method written for that endpoint
