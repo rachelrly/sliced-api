@@ -1,4 +1,4 @@
-# Sliced Client
+# Sliced API
 
 Sliced allows you to save your recipes and scale the ingredients up or down by 1/4 increments.
 
@@ -53,7 +53,7 @@ Establishes /api/recipes, /api/auth, and /api/user routes.
 
 Contains router and service file for /api/auth endpoint.
 
-#### /src/users
+### /src/users
 
 Contains router and service file for /api/users endpoint.
 
