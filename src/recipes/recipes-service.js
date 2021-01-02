@@ -5,7 +5,7 @@ const RecipesService = {
         return db
             .select(
                 'id',
-                'title',
+                'recipe_title',
                 'original_url',
                 'date_created'
             )
@@ -19,7 +19,7 @@ const RecipesService = {
             .from('user_recipes')
             .select(
                 'id',
-                'title',
+                'recipe_title',
                 'original_url',
                 'date_created'
             )

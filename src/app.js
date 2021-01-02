@@ -2,30 +2,38 @@ require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const helmet = require('helmet');
-const { NODE_ENV } = require('./config')
-const recipesRouter = require('./recipes/recipes-router')
-const usersRouter = require('./users/users-router')
-const authRouter = require('./auth/auth-router')
+const { NODE_ENV } = require('./config');
+const recipesRouter = require('./recipes/recipes-router');
+const usersRouter = require('./users/users-router');
+const authRouter = require('./auth/auth-router');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./schema/schema');
 
 
-const app = express()
+const app = express();
 
 const morganOption = (NODE_ENV === 'production')
     ? 'tiny'
     : 'common';
 
-app.use(morgan(morganOption))
-app.use(express.json())
-app.use(helmet())
-app.use(cors())
+app.use(morgan(morganOption));
+app.use(express.json());
+app.use(cors());
+
+
 app.use('/api/recipes', recipesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/auth', authRouter)
 
-app.get('/', (req, res) => {
-    res.send('Hello Sliced')
-})
+app.use('/graphql', graphqlHTTP(req => ({
+    schema,
+    graphiql: true,
+    context: {
+        user: req.user,
+        db: req.app.get('db')
+    }
+})))
+
 
 app.use(function errorHandler(error, req, res, next) {
     let response

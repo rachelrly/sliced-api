@@ -1,7 +1,8 @@
 CREATE TABLE recipe_ingredients (
     id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    amount_str TEXT,
+    ingredient_name TEXT NOT NULL,
+    amount DECIMAL(3,2),
+    unit TEXT,
     recipe_id TEXT 
         REFERENCES user_recipes(id) ON DELETE CASCADE NOT NULL
 );

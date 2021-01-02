@@ -4,8 +4,9 @@ const IngredientsService = {
         return db
             .select(
                 'id',
-                'title',
-                'amount_str',
+                'ingredient_name',
+                'amount',
+                'unit'
             )
             .from('recipe_ingredients')
             .where('recipe_id', recipe_id)
