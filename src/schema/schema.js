@@ -20,6 +20,7 @@ const IngredientType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     amount: { type: GraphQLFloat },
+    unit: { type: UnitEnumType },
     ingredient_name: { type: GraphQLString },
     recipe_id: { type: GraphQLID }
   })
@@ -44,19 +45,19 @@ const RecipeType = new GraphQLObjectType({
 const UnitEnumType = new GraphQLEnumType({
   name: 'UnitStateEnum',
   values: {
-    CUP: {
+    cup: {
       value: 'cup'
     },
-    TSP: {
+    tsp: {
       value: 'tsp'
     },
-    TBSP: {
+    tbsp: {
       value: 'tbsp'
     },
-    OZ: {
+    oz: {
       value: 'ounce'
     },
-    LB: {
+    lb: {
       value: 'pound'
     }
   }

@@ -9,7 +9,7 @@ authRouter
     .post('/login', jsonBodyParser, (req, res, next) => {
         const { email, password } = req.body
         const user = { email, password }
-
+        console.log('FROM ', email, password)
         for (const [key, value] of Object.entries(user))
             if (value == null) {
                 return res
@@ -29,7 +29,6 @@ authRouter
                 }
                 return AuthService.comparePasswords(user.password, dbUser.password)
                     .then(compareMatch => {
-                        console.log('fails at incorrect email password')
                         if (!compareMatch)
                             if (!compareMatch)
                                 return res

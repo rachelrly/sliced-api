@@ -31,14 +31,14 @@ VALUES
     ('1', 'bacon slices', 6, null),
     ('1', 'sweet onion', 1, null),
     ('1', 'garlic cloves', 3, null),
-    ('1', 'crushed red pepper', 1, 'TSP'),
-    ('1', 'bunches turnip, mustard, or collard greens', '2', null),
-    ('1', 'chicken stock', 8, 'CUPS'),
+    ('1', 'crushed red pepper', 1, 'tsp'),
+    ('1', 'bunches turnip, mustard, or collard greens', '2', 'cup'),
+    ('1', 'chicken stock', 8, 'cup'),
     ('1', 'salt', null, null),
-    ('5', 'all purpose flour', 2.5, 'CUPS'),
-    ('5', 'granulated sugar', 1, 'TSP'),
-    ('5', 'salt', 1, 'TSP'),
-    ('5', 'unsalted butter', 1, 'CUP'),
-    ('5', 'ice water', 0.5, 'CUP');
+    ('5', 'all purpose flour', 2.5, 'cup'),
+    ('5', 'granulated sugar', 1, 'tsp'),
+    ('5', 'salt', 1, 'tsp'),
+    ('5', 'unsalted butter', 1, 'cup'),
+    ('5', 'ice water', 0.5, 'cup');
     
 COMMIT;

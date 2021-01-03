@@ -1,0 +1,3 @@
+ALTER TABLE recipe_ingredients DROP COLUMN IF EXISTS unit;
+
+DROP TYPE IF EXISTS UNITS;
