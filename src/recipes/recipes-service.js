@@ -34,31 +34,10 @@ const RecipesService = {
             .delete()
     },
 
-    addRecipe(db, recipe, ingredients) {
-
+    addRecipe(db, recipe) {
         return db
             .insert(recipe)
             .into('user_recipes')
-            .returning('*')
-            .then(rows => {
-                return rows[0]
-            })
-            .then(rec => {
-                let recipe_id = rec.id
-
-                ingredients.forEach((ing) => {
-                    const fullIng = { ...ing, recipe_id }
-                    return db
-                        .insert({ ...fullIng })
-                        .into('recipe_ingredients')
-                        .returning('*')
-                        .catch(err => console.log(err.message))
-
-                })
-                return rec;
-            })
-            .catch(err => console.log(err.message))
-
     }
 
 }

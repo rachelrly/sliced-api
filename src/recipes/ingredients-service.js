@@ -11,6 +11,12 @@ const IngredientsService = {
             .from('recipe_ingredients')
             .where('recipe_id', recipe_id)
     },
+    addIngredients(db, ingredient) {
+        return db
+            .insert(ingredient)
+            .into('recipe_ingredients')
+
+    }
 
 }
 

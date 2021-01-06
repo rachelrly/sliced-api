@@ -3,8 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const { NODE_ENV } = require('./config');
-const recipesRouter = require('./recipes/recipes-router');
-const usersRouter = require('./users/users-router');
+const userRouter = require('./user/user-router');
 const authRouter = require('./auth/auth-router');
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
@@ -20,9 +19,7 @@ app.use(morgan(morganOption));
 app.use(express.json());
 app.use(cors());
 
-
-app.use('/api/recipes', recipesRouter)
-app.use('/api/users', usersRouter)
+app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
 
 app.use('/graphql', graphqlHTTP(req => ({

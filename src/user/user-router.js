@@ -1,25 +1,27 @@
 const express = require('express')
-const UsersService = require('./users-service')
+const UserService = require('./user-service')
 
 
-const usersRouter = express.Router()
+const userRouter = express.Router()
 const jsonParser = express.json()
 
-usersRouter
+userRouter
     .route('/')
     .post(jsonParser, (req, res, next) => {
         const { email, nickname, password } = req.body;
         const newUser = { email, nickname, password }
-        UsersService.addUser(
+        const hashedPassword = UserService.hashPassword(password);
+        newUser.password = hashedPassword;
+
+        UserService.addUser(
             req.app.get('db'),
             newUser
         )
             .then(user => {
                 return res
-                    .status(201)
-                    .json(user)
+                    .status(201);
             })
     })
 
 
-module.exports = usersRouter;
+module.exports = userRouter;
