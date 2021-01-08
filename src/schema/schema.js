@@ -11,9 +11,9 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLEnumType,
-  DateTime,
   InputType,
-  OutputType
+  OutputType,
+  GraphQLInputObjectType
 } = graphql;
 
 
@@ -41,6 +41,15 @@ const RecipeType = new GraphQLObjectType({
         return IngredientsService.getAllIngredients(context.db, parent.id)
       }
     }
+  })
+})
+
+const RecipeInputType = new GraphQLInputObjectType({
+  name: 'AddRecipe',
+  fields: () => ({
+    id: { type: GraphQLID },
+    recipe_title: { type: GraphQLString },
+    user_id: { type: GraphQLID }
   })
 })
 
@@ -78,31 +87,15 @@ const RootQuery = new GraphQLObjectType({
     recipes: {
       type: new GraphQLList(RecipeType),
       resolve(parent, args, context) {
-        return RecipeService.getAllRecipes(context.db, context.user_id)
+        console.log('USER', context.user)
+        return RecipeService.getAllRecipes(context.db, context.user)
       }
     }
   }
 })
 
-const RootMutation = new GraphQLObjectType({
-  name: 'RootMutationType',
-  fields: {
-    addRecipe: {
-      type: RecipeType,
-      args: {
-        id: { type: OutputType },
-        recipe_title: { type: OutputType }
-      },
-      resolve(parent, args, context) {
-        const { id, recipe_title } = args;
-        RecipeService.addRecipe(context.db, { id, recipe_title });
-      }
-    }
-  }
-})
 
 
 module.exports = new GraphQLSchema({
-  query: RootQuery,
-  mutation: RootMutation
+  query: RootQuery
 });

@@ -24,6 +24,7 @@ const AuthService = {
     },
 
     verifyJwt(token) {
+        console.log('verify jwt ran')
         return jwt.verify(token, config.JWT_SECRET, {
             algorithms: ['HA2556'],
         })

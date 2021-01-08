@@ -9,7 +9,6 @@ authRouter
     .post('/login', jsonBodyParser, (req, res, next) => {
         const { email, password } = req.body
         const user = { email, password }
-        console.log('FROM ', email, password)
         for (const [key, value] of Object.entries(user))
             if (value == null) {
                 return res
@@ -21,7 +20,7 @@ authRouter
             user.email
         )
             .then(dbUser => {
-
+                console.log(dbUser)
                 if (!dbUser) {
                     return res
                         .status(400)

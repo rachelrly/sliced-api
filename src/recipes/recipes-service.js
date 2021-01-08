@@ -2,6 +2,7 @@
 const RecipesService = {
 
     getAllRecipes(db, user_id) {
+        console.log('USER ID FROM RECIPES', user_id)
         return db
             .select(
                 'id',

@@ -5,6 +5,8 @@ const cors = require('cors');
 const { NODE_ENV } = require('./config');
 const userRouter = require('./user/user-router');
 const authRouter = require('./auth/auth-router');
+const recipeRouter = require('./recipes/recipes-router');
+const requireAuth = require('./middleware/jwt-auth.js')
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
 
@@ -21,8 +23,9 @@ app.use(cors());
 
 app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/recipes', recipeRouter)
 
-app.use('/graphql', graphqlHTTP(req => ({
+app.use('/graphql', requireAuth, graphqlHTTP(req => ({
     schema,
     graphiql: true,
     context: {
