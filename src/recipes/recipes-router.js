@@ -58,9 +58,10 @@ recipesRouter
       req.app.get('db'),
       req.params.id
     )
-      .then(rec => {
+      .then(()=> {
         return res
           .status(204)
+          .end()
       })
       .catch(next)
   })

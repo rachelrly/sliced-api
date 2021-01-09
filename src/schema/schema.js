@@ -44,15 +44,6 @@ const RecipeType = new GraphQLObjectType({
   })
 })
 
-const RecipeInputType = new GraphQLInputObjectType({
-  name: 'AddRecipe',
-  fields: () => ({
-    id: { type: GraphQLID },
-    recipe_title: { type: GraphQLString },
-    user_id: { type: GraphQLID }
-  })
-})
-
 const UnitEnumType = new GraphQLEnumType({
   name: 'UnitStateEnum',
   values: {
@@ -93,8 +84,25 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
+const RootMutation = new GraphQLObjectType({
+  name: 'RootMutationType',
+  fields: ()=>  ({
+    addRecipe: {
+      type: RecipeType,
+      args: {
+        recipe_title: { type: GraphQLString },
+        user_id: {type: GraphQLID},
+        id: {type: GraphQLID}
+      },
+      resolve(obj, context, args, info) {
+        console.log('SUCCESSFUL ADD RECIPE', args.recipe_title, args.user_id, args.id)
+      }
+    }
+  })
+})
 
 
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation: RootMutation
 });
