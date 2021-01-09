@@ -27,10 +27,10 @@ recipesRouter
   .route('/')
   .post(requireAuth, jsonParser, async (req, res, next) => {
     const user_id = req.user.id;
-    const { title, ingredients, id } = req.body;
-    const newRecipe = { recipe_title: title, user_id, id };
+    const { title, ingredients } = req.body;
+    const newRecipe = { recipe_title: title, user_id };
 
-    await RecipesService.addRecipe(
+    const [{ id }] = await RecipesService.addRecipe(
       req.app.get('db'),
       newRecipe
     )
@@ -45,7 +45,7 @@ recipesRouter
       }))
     return res
       .status(201)
-      .json(serializeRecipe)
+      .json()
 
   })
 
@@ -56,7 +56,7 @@ recipesRouter
   .delete((req, res, next) => {
     RecipesService.deleteRecipe(
       req.app.get('db'),
-      req.user.id
+      req.params.id
     )
       .then(rec => {
         return res

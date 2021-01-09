@@ -38,6 +38,7 @@ const RecipesService = {
         return db
             .insert(recipe)
             .into('user_recipes')
+            .returning('*')
     }
 
 }
