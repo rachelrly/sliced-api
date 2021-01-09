@@ -10,9 +10,9 @@ INSERT INTO users
 (email, nickname, password) 
     VALUES
     ('r.a.reill18@gmail.com', 'Rachel', '$2a$04$E5ZgpymY0/gbQzcuTM66uOBqoDdUC/S3AL3RVHKtf2zcsbt3rEDem'),
+    ('test@gmail.com', 'test', '$2a$04$E5ZgpymY0/gbQzcuTM66uOBqoDdUC/S3AL3RVHKtf2zcsbt3rEDem')
     ('lucy@gmail.com', 'Lucy', '$2a$04$E5ZgpymY0/gbQzcuTM66uOBqoDdUC/S3AL3RVHKtf2zcsbt3rEDem'),
-    ('joe@gmail.com', 'Joe', '$2a$04$E5ZgpymY0/gbQzcuTM66uOBqoDdUC/S3AL3RVHKtf2zcsbt3rEDem'),
-    ('laura@gmail.com', 'Laura', '$2a$04$.8LxtFaIGB3M/qi4Z5rD.u1oOSH0uKZtGLzDpNJNm3nFEOhAMhC62');
+    ('joe@gmail.com', 'Joe', '$2a$04$E5ZgpymY0/gbQzcuTM66uOBqoDdUC/S3AL3RVHKtf2zcsbt3rEDem');
 
 
 INSERT INTO user_recipes 

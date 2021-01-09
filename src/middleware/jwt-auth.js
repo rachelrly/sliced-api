@@ -17,7 +17,6 @@ async function requireAuth(req, res, next) {
         const user = await AuthService.getUserWithEmail(
             req.app.get('db'),
             payload.sub)
-        console.log('USER LINE 20', user)
         if (!user) {
             return res
                 .status(401)

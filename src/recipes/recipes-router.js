@@ -1,6 +1,8 @@
 const express = require('express')
 const xss = require('xss')
-const RecipesService = require('./recipes-service')
+const IngredientsService = require('./ingredients-service')
+const RecipesService = require('./recipes-service');
+const requireAuth = require('../middleware/jwt-auth');
 
 
 const recipesRouter = express.Router()
@@ -22,69 +24,43 @@ const serializeIngredient = ing => ({
 
 //Path to all recipes
 recipesRouter
-  .route('/:user')
+  .route('/')
+  .post(requireAuth, jsonParser, async (req, res, next) => {
+    const user_id = req.user.id;
+    const { title, ingredients, id } = req.body;
+    const newRecipe = { recipe_title: title, user_id, id };
 
-  .get((req, res, next) => {
-    const user_id = req.params.user;
-    RecipesService.getAllRecipes(
-      req.app.get('db'), user_id)
-      .then(rec => {
-        console.log('FROM RECIPE ROUTER', req.user)
-        return res
-          .status(200)
-          .json(rec.map(serializeRecipe))
-      })
-      .catch(next)
-
-  })
-  .post(jsonParser, (req, res, next) => {
-    const user_id = req.params.user;
-    const { title, original_url, ingredients, id } = req.body;
-    const newRecipe = { title, original_url, user_id, id };
-
-    RecipesService.addRecipe(
+    await RecipesService.addRecipe(
       req.app.get('db'),
-      newRecipe,
-      ingredients
+      newRecipe
     )
-      .then(rec => {
-        console.log(rec)
-        return res
-          .status(201)
-          .json(serializeRecipe)
-      })
+    Promise.all(
+      ingredients.map(async (ingredient) => {
+        const amount = ingredient.amount ? IngredientsService.formatFractions(ingredient.amount) : null
+        const i = { ...ingredient, amount, recipe_id: id }
+        await IngredientsService.addIngredients(
+          req.app.get('db'),
+          i
+        )
+      }))
+    return res
+      .status(201)
+      .json(serializeRecipe)
 
-      .catch(next)
   })
 
 
 
 recipesRouter
-  .route('/:user/:id')
-
-  .get((req, res, next) => {
-    RecipesService.getRecipeById(
-      req.app.get('db'),
-      req.params.id,
-      req.params.user
-    )
-      .then(rec => {
-        return res
-          .status(200)
-          .json(serializeRecipe(rec))
-      })
-      .catch(next)
-  })
-
+  .route('/:id')
   .delete((req, res, next) => {
     RecipesService.deleteRecipe(
       req.app.get('db'),
-      req.params.id
+      req.user.id
     )
       .then(rec => {
         return res
           .status(204)
-          .end()
       })
       .catch(next)
   })

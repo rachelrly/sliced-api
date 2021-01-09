@@ -87,7 +87,6 @@ const RootQuery = new GraphQLObjectType({
     recipes: {
       type: new GraphQLList(RecipeType),
       resolve(parent, args, context) {
-        console.log('USER', context.user)
         return RecipeService.getAllRecipes(context.db, context.user.id)
       }
     }

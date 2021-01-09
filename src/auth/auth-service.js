@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 const AuthService = {
 
     getUserWithEmail(db, email) {
-        console.log('get user with email', email)
         return db('users')
             .where({ email })
             .first()

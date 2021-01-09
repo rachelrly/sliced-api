@@ -20,7 +20,6 @@ authRouter
             user.email
         )
             .then(dbUser => {
-                console.log(dbUser)
                 if (!dbUser) {
                     return res
                         .status(400)
