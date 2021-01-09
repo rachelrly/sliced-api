@@ -2,8 +2,7 @@ const AuthService = require('../auth/auth-service');
 
 async function requireAuth(req, res, next) {
     const authToken = req.get('Authorization') || ''
-    let bearerToken
-    console.log('require auth token', authToken)
+    let bearerToken;
     if (!authToken.toLowerCase().startsWith('bearer')) {
         return res
             .status(401)
@@ -13,32 +12,20 @@ async function requireAuth(req, res, next) {
     }
 
     try {
-        console.log('BEFORE PAYLOAD', bearerToken)
         const payload = await AuthService.verifyJwt(bearerToken)
 
-        console.log('PAYLOAD', payload)
-
-        AuthService.getUserWithEmail(
+        const user = await AuthService.getUserWithEmail(
             req.app.get('db'),
-            payload.sub,
-        )
-            .then(user => {
-                console.log(user)
-                if (!user) {
-                    return res
-                        .status(401)
-                        .json({ error: 'unauthorized request' })
-                }
+            payload.sub)
+        console.log('USER LINE 20', user)
+        if (!user) {
+            return res
+                .status(401)
+                .json({ error: 'unauthorized request' })
+        }
 
-                console.log('USER FROM FUNC', user)
-                req.user = user;
-                next()
-            })
-            .catch(err => {
-                console.error(err)
-                next(err)
-            })
-
+        req.user = user;
+        next();
     } catch (error) {
         return res
             .status(401)

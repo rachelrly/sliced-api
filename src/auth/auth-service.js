@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const AuthService = {
 
     getUserWithEmail(db, email) {
+        console.log('get user with email', email)
         return db('users')
             .where({ email })
             .first()
@@ -23,11 +24,11 @@ const AuthService = {
             })
     },
 
-    verifyJwt(token) {
-        console.log('verify jwt ran')
-        return jwt.verify(token, config.JWT_SECRET, {
-            algorithms: ['HA2556'],
+    async verifyJwt(token) {
+        const test = jwt.verify(token, config.JWT_SECRET, {
+            algorithms: 'HS256'
         })
+        return test;
     }
 }
 
