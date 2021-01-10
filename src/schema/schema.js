@@ -1,5 +1,4 @@
 const RecipeService = require('../recipes/recipes-service');
-const IngredientService = require('../recipes/ingredients-service')
 const graphql = require('graphql');
 const IngredientsService = require('../recipes/ingredients-service');
 const {
@@ -8,12 +7,8 @@ const {
   GraphQLList,
   GraphQLString,
   GraphQLID,
-  GraphQLInt,
   GraphQLFloat,
-  GraphQLEnumType,
-  InputType,
-  OutputType,
-  GraphQLInputObjectType
+  GraphQLEnumType
 } = graphql;
 
 
@@ -84,25 +79,8 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
-const RootMutation = new GraphQLObjectType({
-  name: 'RootMutationType',
-  fields: ()=>  ({
-    addRecipe: {
-      type: RecipeType,
-      args: {
-        recipe_title: { type: GraphQLString },
-        user_id: {type: GraphQLID},
-        id: {type: GraphQLID}
-      },
-      resolve(obj, context, args, info) {
-        console.log('SUCCESSFUL ADD RECIPE', args.recipe_title, args.user_id, args.id)
-      }
-    }
-  })
-})
 
 
 module.exports = new GraphQLSchema({
-  query: RootQuery,
-  mutation: RootMutation
+  query: RootQuery
 });
