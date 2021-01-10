@@ -7,8 +7,8 @@ const UserService = {
             .insert(user)
             .into('users')
     },
-    hashPassword(password) {
-        return bcrypt.hash(password, 12)
+   async hashPassword(password) {
+        return await bcrypt.hash(password, 12)
     }
 }
 

@@ -21,7 +21,7 @@ app.use(morgan(morganOption));
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/user', userRouter)
+app.use('/api/users', userRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/recipes', recipeRouter)
 

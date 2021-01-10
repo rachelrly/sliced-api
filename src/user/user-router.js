@@ -7,20 +7,31 @@ const jsonParser = express.json()
 
 userRouter
     .route('/')
-    .post(jsonParser, (req, res, next) => {
-        const { email, nickname, password } = req.body;
-        const newUser = { email, nickname, password }
-        const hashedPassword = UserService.hashPassword(password);
+    .post(jsonParser, async (req, res, next) => {
+try{        const { email, name, password } = req.body;
+        const newUser = { email, nickname: name, password }
+        const hashedPassword = await UserService.hashPassword(password);
+        console.log('HASHED PASWORD', hashedPassword)
         newUser.password = hashedPassword;
 
-        UserService.addUser(
+        console.log('NEW USER', newUser)
+
+        if(!hashedPassword){
+            res.status(400)
+        }
+
+       await UserService.addUser(
             req.app.get('db'),
             newUser
         )
-            .then(user => {
                 return res
-                    .status(201);
-            })
+                    .status(201).end()
+
+       }
+       catch(error){
+           console.log(error)
+       }
+
     })
 
 
