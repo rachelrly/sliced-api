@@ -10,17 +10,19 @@ client repo: https://github.com/Rachanastasia/sliced-client
 
 ## Images
 
-![](sliced-home.png)
+## Images
 
-![](sliced-login.png)
+![](/screenshots/list.jpg)
 
-![](recipe-scale-up.png)
+Users can view all the recipes in a list.
 
-![](recipe-scale-down.png)
+![](/screenshots/input.jpg)
 
-![](recipe-list.png)
+Users can view a live preview of how their recipe is being parsed to adjust their input accordingly.
 
-![](add-recipe.png)
+![](/screenshots/recipe.jpg)
+
+Once a recipe is created, users can scale the list of ingredients up or down by increments of 1/4.
 
 ## Tech Stack
 
