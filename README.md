@@ -10,8 +10,6 @@ client repo: https://github.com/Rachanastasia/sliced-client
 
 ## Images
 
-## Images
-
 ![](/screenshots/list.jpg)
 
 Users can view all the recipes in a list.
